@@ -1,7 +1,7 @@
 {
-    "name": "delakanda/laravel-mazzuma",
+    "name": "delakanda/mazzuma",
     "description": "Laravel wrapper around the Mazzuma API",
-    "keywords": ["mazzuma", "mobile money", "laravel"],
+    "keywords": ["mazzuma", "mobile money", "laravel", "php"],
     "license": "MIT",
     "authors": [
         {
@@ -15,13 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Delakanda\\LaravelMazzuma\\": "src/"
+            "Delakanda\\Mazzuma\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Delakanda\\LaravelMazzuma\\LaravelMazzumaServiceProvider"
+                "Delakanda\\Mazzuma\\MazzumaServiceProvider"
             ]
         }
     }
