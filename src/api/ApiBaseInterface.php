@@ -24,7 +24,7 @@ interface ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function getHttp($url = null, $parameters = []);
+  public function getHttp($url = null, Array $params = []);
 
   /**
    * POST HTTP Reguest

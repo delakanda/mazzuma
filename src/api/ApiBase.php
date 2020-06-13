@@ -6,11 +6,13 @@
  * @license MIT
  **/
 
+namespace Delakanda\Mazzuma\Api;
+
 use Delakanda\Mazzuma\Http\RequestClient;
 use Delakanda\Mazzuma\Config\Config;
 use Delakanda\Mazzuma\Config\ConfigInterface;
 
-abstract class ApiBase extends ApiBaseInterface
+abstract class ApiBase implements ApiBaseInterface
 {
   /**
    * Constructor
@@ -19,6 +21,7 @@ abstract class ApiBase extends ApiBaseInterface
    */
 
   protected $apiClient;
+  protected $config;
 
   public function __construct(ConfigInterface $config)
   {
@@ -29,6 +32,12 @@ abstract class ApiBase extends ApiBaseInterface
   public function getBaseUrl()
   {
     return 'https://client.teamcyst.com';
+  }
+
+  public function setConfig(ConfigInterface $config)
+  {
+    $this->config = $config;
+    return $this;
   }
 
   /**
