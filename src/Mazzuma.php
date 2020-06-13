@@ -80,7 +80,7 @@ class Mazzuma
    */
   protected function getApiInstance($method, ...$parameters)
   {
-    $class = '\\Delakanda\\Mazzuma\\\\' . ucwords($method);
+    $class = '\\Delakanda\\Mazzuma\\Api\\' . ucwords($method);
     if (class_exists($class)) return new $class($this->config, ...$parameters);
     throw new \BadMethodCallException('The Method [ ' . $method . '] you tried to call does not exist.');
   }

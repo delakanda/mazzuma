@@ -32,4 +32,25 @@ class Config implements ConfigInterface
     // TODO - Check for other methods of getting env variables
     return getenv($key);
   }
+
+  /**
+   * Return Mazzuma api key
+   *
+   * @return string
+   */
+  public function getApiKey()
+  {
+    return $this->apiKey;
+  }
+
+  /**
+   * Sets the Mazzuma API key.
+   *
+   * @param  string  $apiKey
+   */
+  public function setApiKey($apiKey)
+  {
+    $this->apiKey = $apiKey;
+    return $this;
+  }
 }
