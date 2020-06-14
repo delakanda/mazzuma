@@ -24,7 +24,7 @@ interface ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function getHttp($url = null, Array $params = []);
+  public function getRequest($url = null, Array $params = []);
 
   /**
    * POST HTTP Reguest
@@ -33,7 +33,7 @@ interface ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function postHttp($url = null, Array $params = []);
+  public function postRequest($url = null, Array $params = []);
 
   /**
    * PUT HTTP Reguest
@@ -42,5 +42,5 @@ interface ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function putHttp($url = null, Array $params = []);
+  public function putRequest($url = null, Array $params = []);
 }

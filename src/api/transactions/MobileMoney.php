@@ -75,10 +75,11 @@ class MobileMoney extends ApiBase
 
   public function __construct($data=[])
   {
+    parent::__construct();
     $this->assignToMembers($data, $this->requiredParams);
   }
 
-  public function initiatePayment()
+  public function initiateTransaction()
   {
     $paymentData = [
       'price' =>  $this->price->value,
@@ -92,6 +93,9 @@ class MobileMoney extends ApiBase
       'token' => $this->token->value
     ];
 
-    dD($paymentData);
+    $uri = "api_call.php";
+
+    $response = $this->postRequest($uri, $paymentData);
+    return $response;
   }
 }

@@ -8,9 +8,10 @@
 
 namespace Delakanda\Mazzuma\Api;
 
-use Delakanda\Mazzuma\Http\RequestClient;
 use Delakanda\Mazzuma\Config\Config;
 use Delakanda\Mazzuma\Config\ConfigInterface;
+use Delakanda\Mazzuma\Http\RequestClient;
+use Delakanda\Mazzuma\Http\RequestClientInterface;
 
 abstract class ApiBase implements ApiBaseInterface
 {
@@ -23,15 +24,16 @@ abstract class ApiBase implements ApiBaseInterface
   protected $apiClient;
   protected $config;
 
-  public function __construct(ConfigInterface $config)
+  public function __construct(ConfigInterface $config = null)
   {
     $this->config = $config;
-    $this->apiClient = getApiClient();
+    $this->apiClient = $this->getApiClient();
   }
 
   public function getBaseUrl()
   {
     return 'https://client.teamcyst.com';
+    // return "localhost:3030";
   }
 
   public function setConfig(ConfigInterface $config)
@@ -47,7 +49,7 @@ abstract class ApiBase implements ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function getHttp($url = null, Array $params = [])
+  public function getRequest($url = null, Array $params = [])
   {
     return $this->apiClient->executeRequest('GET', $url, $params);
   }
@@ -59,7 +61,7 @@ abstract class ApiBase implements ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function postHttp($url = null, Array $params = [])
+  public function postRequest($url = null, Array $params = [])
   {
     return $this->apiClient->executeRequest('POST', $url, $params);
   }
@@ -71,17 +73,17 @@ abstract class ApiBase implements ApiBaseInterface
    * @param array  $parameters
    * @return array
    */
-  public function putHttp($url = null, Array $params = [])
+  public function putRequest($url = null, Array $params = [])
   {
     return $this->apiClient->executeRequest('PUT', $url, $params);
   }
 
   /**
    * Get Client to use - in this case RequestClient
-   * @return RequestClient
+   * @return RequestClientInterface
    */
-  public function getApiClient()
+  private function getApiClient()
   {
-    return new RequestClient(getBaseUrl());
+    return new RequestClient($this->getBaseUrl());
   }
 }

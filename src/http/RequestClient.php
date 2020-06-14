@@ -10,16 +10,17 @@ namespace Delakanda\Mazzuma\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException as GuzzleClientException;
+use Delakanda\Mazzuma\Utils\Json;
 
 class RequestClient implements RequestClientInterface
 {
   protected $guzzleClient;
 
-  public function _construct($baseUri)
+  public function __construct($baseUri)
   {
     $this->guzzleClient = new Client(
       [
-        'base_uri' => $baseUrl
+        'base_uri' => $baseUri
       ]
     );
   }
@@ -28,13 +29,24 @@ class RequestClient implements RequestClientInterface
   {
     try 
     {
-      $response = $this->guzzleClient->{$httpMethod}($url, [
+      $response = $this->guzzleClient->{$method}($url, [
         'json' => $params,
+        'headers' => ['Content-Type' => 'application/json']
       ]);
+      return Json::sendResponse($response->getBody()->getContents(), $response->getStatusCode(), false);
     }
-    catch(\GuzzleClientException $e)
+    catch(\Exception $e)
     {
-      //
+      if ($e->hasResponse()) 
+      {
+        $exception = (string) $e->getResponse()->getBody();
+        $exceptionJson = json_decode($exception);
+        return Json::sendResponse($exceptionJson, $e->getCode());
+      }
+      else 
+      {
+        return Json::sendResponse($e->getMessage(), 503);
+      }
     }
   }
 }
