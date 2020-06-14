@@ -13,7 +13,7 @@ $ composer require delakanda/mazzuma
 ## For Laravel users
 
 ### Service Provider Setup
-** NB: If you are using Laravel with a version greater than '5.5' you can skip this **
+**NB: If you are using Laravel with a version greater than '5.5' you can skip this**
 
 Add the following to your '**config/app.php**' file in the '**providers**' array section
 
@@ -22,7 +22,7 @@ Delakanda\Mazzuma\MazzumaServiceProvider::class,
 ```
 
 ### Setup the Facade
-** NB: If you are using Laravel with a version greater than '5.5' you can skip this **
+**NB: If you are using Laravel with a version greater than '5.5' you can skip this**
 
 Add the Mazzuma facade to your '**config/app.php**' file in the '**aliases**' array section
 
@@ -91,4 +91,4 @@ $transactionResult = Mazzuma::make($configuration)->mobileMoney()
 
 ```
 
-** NB: The response from the above code is in JSON with the appropriate http status code as is received from the Mazzuma API itself **
+**NB: The response from the above code is in JSON with the appropriate http status code as is received from the Mazzuma API itself**
