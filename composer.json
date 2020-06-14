@@ -19,6 +19,7 @@
             "Delakanda\\Mazzuma\\": "src/"
         }
     },
+    "minimum-stability": "dev",
     "extra": {
         "laravel": {
             "providers": [

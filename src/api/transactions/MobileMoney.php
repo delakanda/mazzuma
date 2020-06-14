@@ -122,7 +122,7 @@ class MobileMoney extends ApiBase
       ], 400);
     }
 
-    $uri = "mazzumatestget?orderID={$this->orderID->value}&apiKey={$this->config->getApiKey()}";
+    $uri = "checktransaction.php?orderID={$this->orderID->value}&apiKey={$this->config->getApiKey()}";
     $response = $this->getRequest($uri);
     return $response;
   }

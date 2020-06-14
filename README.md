@@ -53,7 +53,7 @@ Usage is as follows:
 
 use Delakanda\Mazzuma\Mazzuma;
 
-$transactionResult = Mazzuma::make()->mobileMoney()
+$mobileMoney = Mazzuma::make()->mobileMoney()
   ->price(200);
   ->network("mtn")
   ->recipientNumber("0244000000")
@@ -61,6 +61,12 @@ $transactionResult = Mazzuma::make()->mobileMoney()
   ->option("rmtm")
   ->orderId("10000010") // Optional 
   ->token("200394903"); // Required ONLY for VODAFONE transactions
+
+// Initiate MoMo Transaction
+$transactionResult = $mobileMoney->initiateTransaction();
+
+// To Check status of the mobile money transaction
+$transactionStatus = $mobileMoney->checkTransactionStatus();
 
 ```
 
@@ -79,7 +85,7 @@ use Delakanda\Mazzuma\Mazzuma;
 $apiKey = 'xxxxxxxxx';
 $configuration = new Config($apiKey);
 
-$transactionResult = Mazzuma::make($configuration)->mobileMoney()
+$mobileMoney = Mazzuma::make($configuration)->mobileMoney()
   ->price(200);
   ->price(200);
   ->network("mtn")
@@ -88,6 +94,12 @@ $transactionResult = Mazzuma::make($configuration)->mobileMoney()
   ->option("rmtm")
   ->orderId("10000010") // Optional 
   ->token("200394903"); // Required ONLY for VODAFONE transactions
+
+// Initiate MoMo Transaction
+$transactionResult = $mobileMoney->initiateTransaction();
+
+// To Check status of the mobile money transaction
+$transactionStatus = $mobileMoney->checkTransactionStatus();
 
 ```
 
