@@ -9,7 +9,9 @@
 namespace Delakanda\Mazzuma\Api\Transactions;
 
 use Delakanda\Mazzuma\Api\ApiBase;
+use Delakanda\Mazzuma\Traits\Validatable;
 use Delakanda\Mazzuma\Traits\Assignable;
+use Delakanda\Mazzuma\Utils\Parameter;
 
 /**
  * This class Manages Mazzuma mobile money operations
@@ -18,6 +20,7 @@ use Delakanda\Mazzuma\Traits\Assignable;
 class MobileMoney extends ApiBase
 {
   use Assignable;
+  use Validatable;
 
   /**
    * The amount to be paid
@@ -66,21 +69,27 @@ class MobileMoney extends ApiBase
   protected $token;
 
   private $requiredParams = [
-    'price',
-    'network',
-    'recipient_number',
-    'sender',
-    'option'
+    "price","network","recipient_number","sender","option"
   ];
 
-  public function __construct($data=[])
+  private $optionalParams = [
+    "orderID","token"
+  ];
+
+  public function __construct()
   {
     parent::__construct();
-    $this->assignToMembers($data, $this->requiredParams);
+    $this->setMemberVariables(array_merge($this->requiredParams, $this->optionalParams), $this->requiredParams);
   }
 
+  /**
+   * Initiate mobile money transaction
+   * @return string JSON with an http status code
+   **/
   public function initiateTransaction()
   {
+    $this->validateParameters();
+
     $paymentData = [
       'price' =>  $this->price->value,
       'network' => $this->network->value,
@@ -90,12 +99,74 @@ class MobileMoney extends ApiBase
       'option' => $this->option->value,
       'apiKey' => $this->config->getApiKey(),
       'orderID' => $this->orderID ? $this->orderID->value : null,
-      'token' => $this->token->value
+      'token' => $this->token ? $this->token->value : null
     ];
 
-    $uri = "api_call.php";
+    // $uri = "api_call.php";
+    $uri = "mazzumatest";
 
     $response = $this->postRequest($uri, $paymentData);
     return $response;
+  }
+
+  /**
+   * Check mobile money transaction status with orderID set
+   * @return string JSON with an http status code
+   **/
+  public function checkTransactionStatus()
+  {
+    if(!$this->orderID)
+    {
+      return $this->customResponse([
+        'status' =>  0,
+        'message' => 'orderId is not set on this instance'
+      ], 400);
+    }
+
+    $uri = "mazzumatestget?orderID={$this->orderID->value}";
+    $response = $this->getRequest($uri);
+    return $response;
+  }
+
+  public function price(float $amount)
+  {
+    $this->price = new Parameter($amount, true);
+    return $this;
+  }
+  
+  public function network(string $network)
+  {
+    $this->network = new Parameter($network, true);
+    return $this;
+  }
+
+  public function recipientNumber(string $recipient_number)
+  {
+    $this->recipient_number = new Parameter($recipient_number, true);
+    return $this;
+  }
+
+  public function sender(string $sender)
+  {
+    $this->sender = new Parameter($sender, true);
+    return $this;
+  }
+
+  public function option(string $option)
+  {
+    $this->option = new Parameter($option, true);
+    return $this;
+  }
+
+  public function orderId(string $orderId)
+  {
+    $this->orderID = new Parameter($orderId, false);
+    return $this;
+  }
+
+  public function token(string $token)
+  {
+    $this->token = new Parameter($token, false);
+    return $this;
   }
 }

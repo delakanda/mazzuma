@@ -13,34 +13,12 @@ use Delakanda\Mazzuma\Exceptions\MissingRequiredParameterException;
 
 trait Assignable
 {
-  private function assignToMembers($dataToAssign = [], $requiredParams = [])
+  private function setMemberVariables($allParams, $requiredParameters)
   {
-    $properties = [];
-    $dataToAssignArr = [];
-    foreach(get_object_vars($this) as $key => $var)
+    foreach($allParams as $key => $param)
     {
-      $properties[] = $key;
-    }
-
-    foreach($dataToAssign as $key => $var)
-    {
-      $dataToAssignArr[] = $key;
-    }
-
-    foreach($properties as $prop)
-    {
-      if(!in_array($prop, $dataToAssignArr) && in_array($prop, $requiredParams)) 
-      {
-        throw new MissingRequiredParameterException("The required parameter '$prop' is missing from ". get_class($this) . " instantiation");
-      }
-    }
-
-    foreach($dataToAssign as $key => $data)
-    {
-      if(in_array($key, $properties)) 
-      {
-        $this->{$key} = new Parameter(trim($data), in_array($data, $requiredParams));
-      }
+      $isRequired = in_array($param, $requiredParameters);
+      $this->{$param} = new Parameter(null, $isRequired);
     }
   }
 }

@@ -49,4 +49,9 @@ class RequestClient implements RequestClientInterface
       }
     }
   }
+
+  public function customResponse($data, $statusCode)
+  {
+    return Json::sendResponse($data, $statusCode);
+  }
 }

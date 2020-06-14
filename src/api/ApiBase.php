@@ -32,8 +32,8 @@ abstract class ApiBase implements ApiBaseInterface
 
   public function getBaseUrl()
   {
-    return 'https://client.teamcyst.com';
-    // return "localhost:3030";
+    // return 'https://client.teamcyst.com';
+    return "localhost:3030";
   }
 
   public function setConfig(ConfigInterface $config)
@@ -76,6 +76,17 @@ abstract class ApiBase implements ApiBaseInterface
   public function putRequest($url = null, Array $params = [])
   {
     return $this->apiClient->executeRequest('PUT', $url, $params);
+  }
+
+  /**
+   * Send custom JSON Message
+   *
+   * @param array  $responseData
+   * @param int  $statusCode
+   */
+  public function customResponse(Array $data = [], int $statusCode)
+  {
+    return $this->apiClient->customResponse($data, $statusCode);
   }
 
   /**
