@@ -60,7 +60,7 @@ $transactionResult = Mazzuma::make()->mobileMoney()
   ->sender("0245000000")
   ->option("rmtm")
   ->orderId("10000010") // Optional 
-  ->token(""); // Required ONLY for VODAFONE transactions
+  ->token("200394903"); // Required ONLY for VODAFONE transactions
 
 ```
 
@@ -87,7 +87,7 @@ $transactionResult = Mazzuma::make($configuration)->mobileMoney()
   ->sender("0245000000")
   ->option("rmtm")
   ->orderId("10000010") // Optional 
-  ->token(""); // Required ONLY for VODAFONE transactions
+  ->token("200394903"); // Required ONLY for VODAFONE transactions
 
 ```
 
