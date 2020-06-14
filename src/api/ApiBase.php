@@ -36,7 +36,7 @@ abstract class ApiBase implements ApiBaseInterface
     return "localhost:3030";
   }
 
-  public function setConfig(ConfigInterface $config)
+  public function setConfig(ConfigInterface $config = null)
   {
     $this->config = $config;
     return $this;

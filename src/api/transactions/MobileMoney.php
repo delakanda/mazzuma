@@ -102,8 +102,7 @@ class MobileMoney extends ApiBase
       'token' => $this->token ? $this->token->value : null
     ];
 
-    // $uri = "api_call.php";
-    $uri = "mazzumatest";
+    $uri = "api_call.php";
 
     $response = $this->postRequest($uri, $paymentData);
     return $response;
@@ -123,7 +122,7 @@ class MobileMoney extends ApiBase
       ], 400);
     }
 
-    $uri = "mazzumatestget?orderID={$this->orderID->value}";
+    $uri = "mazzumatestget?orderID={$this->orderID->value}&apiKey={$this->config->getApiKey()}";
     $response = $this->getRequest($uri);
     return $response;
   }

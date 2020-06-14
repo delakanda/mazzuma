@@ -25,9 +25,10 @@ class Mazzuma
    *  @param  string  $apiVersion
    *  @return void
    */
-  public function __construct($apiKey = null)
+  public function __construct(ConfigInterface $config = null)
   {
-    $this->config = new Config($apiKey);
+    if($config) $this->config = $config;
+    else $this->config = new Config();
   }
 
   /**
@@ -36,9 +37,9 @@ class Mazzuma
    *  @param string $apiKey
    *  @return Delakanda\Mazzuma\Mazzuma
    */
-  public static function make($apiKey = null)
+  public static function make(ConfigInterface $config = null)
   {
-    return new static($apiKey);
+    return new static($config);
   }
 
   /**
