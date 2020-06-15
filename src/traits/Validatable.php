@@ -13,10 +13,11 @@ use Delakanda\Mazzuma\Exceptions\MissingRequiredParameterException;
 
 trait Validatable
 {
-  private function validateParameters()
+  private function validateParameters($alsoValidate = [])
   {
     $properties = [];
     $dataToAssignArr = [];
+
     foreach(get_object_vars($this) as $key => $var)
     {
       if(gettype($var) === "object")
@@ -38,7 +39,16 @@ trait Validatable
     {
       if($prop['prop_details']->required && !$prop['prop_details']->value) 
       {
-        throw new MissingRequiredParameterException("The required parameter '".$prop['prop_name']."' is missing");
+        throw new MissingRequiredParameterException("The required parameter '".$prop['prop_name']."' is missing from ". get_class($this));
+      }
+    }
+
+    // Check also validate and throw error if value is absent
+    foreach($alsoValidate as $key => $propToValidate)
+    {
+      if(!$this->{$propToValidate}->value) 
+      {
+        throw new MissingRequiredParameterException("The required parameter '".$propToValidate."' is missing from ". get_class($this));
       }
     }
   }

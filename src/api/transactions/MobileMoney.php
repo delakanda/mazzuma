@@ -12,6 +12,7 @@ use Delakanda\Mazzuma\Api\ApiBase;
 use Delakanda\Mazzuma\Traits\Validatable;
 use Delakanda\Mazzuma\Traits\Assignable;
 use Delakanda\Mazzuma\Utils\Parameter;
+use Delakanda\Mazzuma\Exceptions\MissingRequiredParameterException;
 
 /**
  * This class Manages Mazzuma mobile money operations
@@ -96,7 +97,6 @@ class MobileMoney extends ApiBase
       'recipient_number' => $this->recipient_number->value,
       'sender' => $this->sender->value,
       'option' => $this->option->value,
-      'option' => $this->option->value,
       'apiKey' => $this->config->getApiKey(),
       'orderID' => $this->orderID ? $this->orderID->value : null,
       'token' => $this->token ? $this->token->value : null
@@ -111,21 +111,21 @@ class MobileMoney extends ApiBase
   /**
    * Check mobile money transaction status with orderID set
    * @return string JSON with an http status code
+   * @throws Delakanda\Mazzuma\Exceptions\MissingRequiredParameterException
    **/
   public function checkTransactionStatus()
   {
     if(!$this->orderID)
     {
-      return $this->customResponse([
-        'status' =>  0,
-        'message' => 'orderId is not set on this instance'
-      ], 400);
+      throw new MissingRequiredParameterException("The required parameter orderId is missing from ". get_class($this));
     }
 
     $uri = "checktransaction.php?orderID={$this->orderID->value}&apiKey={$this->config->getApiKey()}";
     $response = $this->getRequest($uri);
     return $response;
   }
+
+  #region Methods that match class properties allows chaining to set value of properties
 
   public function price(float $amount)
   {
@@ -168,4 +168,6 @@ class MobileMoney extends ApiBase
     $this->token = new Parameter($token, false);
     return $this;
   }
+
+  #endregion
 }

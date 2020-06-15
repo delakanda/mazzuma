@@ -32,8 +32,7 @@ abstract class ApiBase implements ApiBaseInterface
 
   public function getBaseUrl()
   {
-    // return 'https://client.teamcyst.com';
-    return "localhost:3030";
+    return 'https://client.teamcyst.com';
   }
 
   public function setConfig(ConfigInterface $config = null)
