@@ -40,7 +40,7 @@ MAZZUMA_API_KEY=xxxxxxxxxxxxx
 ## Usage
 
 ### Mazzuma Mobile Money
-To perform a mobile money transaction, simple '**make**' a Mazzuma instance and call the mobile money function on the instance. This will return a Mobile Money instance with which you can set the appropriate properties before making a transaction call.
+To perform a mobile money transaction, simple '**make**' a Mazzuma instance and call the "**mobileMoney()**" function on the instance. This will return a Mobile Money instance with which you can set the appropriate properties before making a transaction call.
 
 Usage is as follows:
 
@@ -104,3 +104,83 @@ $transactionStatus = $mobileMoney->checkTransactionStatus();
 ```
 
 **NB: The response from the above code is in JSON with the appropriate http status code as is received from the Mazzuma API itself**
+
+### MAZ Token API
+
+To perform a mazzuma toke API transaction, the process is very similar to that of the mobile money example. Just "**make**" a Mazzuma instance and call the "**mazzumaToken()** function on the instance.
+
+Below is an example of its usage:
+
+#### Send Mazzuma Tokens
+
+```php
+
+<?php
+
+use Delakanda\Mazzuma\Mazzuma;
+
+$sendMazzumaToken = Mazzuma::make()->mazzumaToken()
+  ->price(200) // The amount to be sent
+  ->recipient('delakanda') // This is the unique username of the recipient of the transaction.
+  ->sender('dkanda') // This is the unique username of the sender of the transaction.
+  ->sendToken();
+
+```
+
+#### Receive Mazzuma Tokens
+
+```php
+
+<?php
+
+use Delakanda\Mazzuma\Mazzuma;
+
+$receiveMazzumaToken = Mazzuma::make()->mazzumaToken()
+  ->sender('delakanda') // The account making the payment
+  ->callback_url('https://your-callback-url.com/path') // Your callback URL
+  ->receiveToken();
+
+```
+
+#### Checking Transaction Status
+
+```php
+
+<?php
+
+use Delakanda\Mazzuma\Mazzuma;
+
+$transactionStatus = Mazzuma::make()->mazzumaToken()
+  ->transactionHash('d5b3ea3a7565383d6124f5ba1eeec0be') // The hash of the transaction you want to check.
+  ->checkTransactionStatus();
+
+```
+
+#### Get Account Balance
+
+```php
+
+<?php
+
+use Delakanda\Mazzuma\Mazzuma;
+
+$accountBalance = Mazzuma::make()->mazzumaToken()
+  ->getAccountBalance();
+
+```
+
+#### Validate Account
+
+```php
+
+<?php
+
+use Delakanda\Mazzuma\Mazzuma;
+
+$accountValidationStatus = Mazzuma::make()->mazzumaToken()
+  ->username("delakanda")
+  ->validateAccount();
+
+```
+
+**NOTE:** For the Mazzuma token API examples above, if you aren't using laravel, you have to create a **config** instance and pass that to the **make** function of the Mazzuma class. check the mobile money section for example usage.

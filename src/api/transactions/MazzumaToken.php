@@ -200,6 +200,12 @@ class MazzumaToken extends ApiBase
     return $this;
   }
 
+  public function username(string $username)
+  {
+    $this->username = new Parameter($username, true);
+    return $this;
+  }
+
   public function transactionHash(string $transaction_hash)
   {
     $this->transaction_hash = new Parameter($transaction_hash, true);
