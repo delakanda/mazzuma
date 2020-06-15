@@ -54,7 +54,7 @@ Usage is as follows:
 use Delakanda\Mazzuma\Mazzuma;
 
 $mobileMoney = Mazzuma::make()->mobileMoney()
-  ->price(200);
+  ->price(200)
   ->network("mtn")
   ->recipientNumber("0244000000")
   ->sender("0245000000")
@@ -86,8 +86,7 @@ $apiKey = 'xxxxxxxxx';
 $configuration = new Config($apiKey);
 
 $mobileMoney = Mazzuma::make($configuration)->mobileMoney()
-  ->price(200);
-  ->price(200);
+  ->price(200)
   ->network("mtn")
   ->recipientNumber("0244000000")
   ->sender("0245000000")
