@@ -103,7 +103,6 @@ class MobileMoney extends ApiBase
     ];
 
     $uri = "api_call.php";
-    dd("PAUSE HERE");
     $response = $this->postRequest($uri, $paymentData);
     return $response;
   }
