@@ -70,6 +70,31 @@ $transactionStatus = $mobileMoney->checkTransactionStatus();
 
 ```
 
+You can also access the Mazzuma object using the mazzuma facade
+
+```php
+
+<?php
+
+use Delakanda\Mazzuma\Facades\Mazzuma;
+
+$mobileMoney = Mazzuma::mobileMoney()
+  ->price(200)
+  ->network("mtn")
+  ->recipientNumber("0244000000")
+  ->sender("0245000000")
+  ->option("rmtm")
+  ->orderId("10000010") // Optional 
+  ->token("200394903"); // Required ONLY for VODAFONE transactions
+
+// Initiate MoMo Transaction
+$transactionResult = $mobileMoney->initiateTransaction();
+
+// To Check status of the mobile money transaction
+$transactionStatus = $mobileMoney->checkTransactionStatus();
+
+```
+
 **For vanilla PHP and other Frameworks:**
 
 ```php
