@@ -214,4 +214,23 @@ class MazzumaToken extends ApiBase
 
   #endregion
 
+  /**
+   * Magic method => triggered whenever method that is inaccessible is called on this instance
+   * Throws BadMethodCallException.
+   * @param string $name Name of invoked method.
+   * @param array $args Additional arguments.
+   */
+  public function __call(string $name, array $args) {
+    throw new \BadMethodCallException("Instance method ".__CLASS__."->$name() doesn't exist");
+  }
+
+  /**
+   * Magic method => triggered whenever method that is inaccessible is called on this instance
+   * Throws BadMethodCallException.
+   * @param string $name Name of invoked method.
+   * @param array $args Additional arguments.
+   */
+  public static function __callstatic(string $name, array $args) {
+    throw new \BadMethodCallException("Static method ".__CLASS__."::$name() doesn't exist");
+  }
 }

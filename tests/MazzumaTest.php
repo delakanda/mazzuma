@@ -58,13 +58,23 @@ class MazzumaTest extends TestCase
   }
 
   /** @test */
-  public function test_that_a_new_instance_without_config_throws_exception_if_env_var_missing()
+  public function test_that_instance_throws_an_error_with_unknown_method()
   {
-    // force empty environment variable
-    putenv("MAZZUMA_API_KEY=");
-
-    $this->expectException(InvalidConfigurationException::class);
+    $this->expectException(\BadMethodCallException::class);
 
     $mazzuma = Mazzuma::make();
+    $mazzuma->bar();
   }
+
+  /** @test */
+  // public function test_that_a_new_instance_without_config_throws_exception_if_env_var_missing()
+  // {
+  //   $apiKey = getenv("MAZZUMA_API_KEY");
+
+  //   // force empty environment variable
+
+  //   $this->expectException(InvalidConfigurationException::class);
+
+  //   $mazzuma = Mazzuma::make();
+  // }
 }

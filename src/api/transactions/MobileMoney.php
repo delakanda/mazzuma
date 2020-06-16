@@ -169,4 +169,63 @@ class MobileMoney extends ApiBase
   }
 
   #endregion
+
+  #region Getter functions for properties
+
+  public function getPrice()
+  {
+    return $this->price ? $this->price->value : null;
+  }
+
+  public function getNetwork()
+  {
+    return $this->network ? $this->network->value : null;
+  }
+
+  public function getRecipientNumber()
+  {
+    return $this->recipient_number ? $this->recipient_number->value : null;
+  }
+
+  public function getSender()
+  {
+    return $this->sender ? $this->sender->value : null;
+  }
+
+  public function getOption()
+  {
+    return $this->option ? $this->option->value : null;
+  }
+
+  public function getOrderId()
+  {
+    return $this->orderID ? $this->orderID->value : null;
+  }
+
+  public function getToken()
+  {
+    return $this->token ? $this->token->value : null;
+  }
+
+  #endregion
+
+  /**
+   * Magic method => triggered whenever method that is inaccessible is called on this instance
+   * Throws BadMethodCallException.
+   * @param string $name Name of invoked method.
+   * @param array $args Additional arguments.
+   */
+  public function __call(string $name, array $args) {
+    throw new \BadMethodCallException("Instance method ".__CLASS__."->$name() doesn't exist");
+  }
+
+  /**
+   * Magic method => triggered whenever method that is inaccessible is called on this instance
+   * Throws BadMethodCallException.
+   * @param string $name Name of invoked method.
+   * @param array $args Additional arguments.
+   */
+  public static function __callstatic(string $name, array $args) {
+    throw new \BadMethodCallException("Static method ".__CLASS__."::$name() doesn't exist");
+  }
 }

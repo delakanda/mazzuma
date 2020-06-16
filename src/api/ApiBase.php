@@ -24,10 +24,10 @@ abstract class ApiBase implements ApiBaseInterface
   protected $apiClient;
   protected $config;
 
-  public function __construct(ConfigInterface $config = null)
+  public function __construct(ConfigInterface $config = null, $apiClient = null)
   {
     $this->config = $config;
-    $this->apiClient = $this->getApiClient();
+    $this->apiClient = $apiClient ? $apiClient : $this->getApiClient();
   }
 
   public function getBaseUrl()
