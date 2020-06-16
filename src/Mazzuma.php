@@ -10,6 +10,7 @@ namespace Delakanda\Mazzuma;
 
 use Delakanda\Mazzuma\Config\Config;
 use Delakanda\Mazzuma\Config\ConfigInterface;
+use Delakanda\Mazzuma\Exceptions\InvalidConfigurationException;
 
 class Mazzuma
 {
@@ -81,6 +82,12 @@ class Mazzuma
    */
   protected function getApiInstance($method, ...$parameters)
   {
+    // Check to ensure config is set
+    if(!$this->config) 
+    {
+      throw new InvalidConfigurationException("No configuration found, please add the appropriate values to your .env file or pass a config instance to the 'make' method");
+    }
+
     $class = '\\Delakanda\\Mazzuma\\Api\\Transactions\\' . ucwords($method);
     if (class_exists($class)) return (new $class(...$parameters))->setConfig($this->config);
     throw new \BadMethodCallException('The Method [ ' . $method . '] you tried to call does not exist.');

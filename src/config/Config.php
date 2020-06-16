@@ -8,6 +8,8 @@
 
 namespace Delakanda\Mazzuma\Config;
 
+use Delakanda\Mazzuma\Exceptions\InvalidConfigurationException;
+
 class Config implements ConfigInterface
 {
   /**
@@ -24,6 +26,12 @@ class Config implements ConfigInterface
   public function __construct($apiKey = null)
   {
     $this->setApiKey($apiKey ? $apiKey : self::getEnvVariable('MAZZUMA_API_KEY', ''));
+
+    $configValidity = $this->isConfigValid();
+    if(!$configValidity['valid'])
+    {
+      throw new InvalidConfigurationException("Configuration is missing : {$configValidity['missing_env']} in your .env or {$configValidity['missing_param']} parameter");
+    }
   }
 
   public static function getEnvVariable($key) 
@@ -52,5 +60,13 @@ class Config implements ConfigInterface
   {
     $this->apiKey = $apiKey;
     return $this;
+  }
+
+  private function isConfigValid()
+  {
+    if(!$this->apiKey) return ['valid' => false, 'missing_param' => 'apiKey', 'missing_env' => 'MAZZUMA_API_KEY'];
+    return [
+      'valid' => true
+    ];
   }
 }
